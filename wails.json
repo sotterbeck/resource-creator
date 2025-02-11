@@ -7,7 +7,7 @@
   "frontend:dev:watcher": "npm run dev",
   "frontend:dev:serverUrl": "auto",
   "info": {
-    "productName": "Resource Creator"
+    "productName": "ResourceCreator"
   },
   "author": {
     "name": "Simon Otterbeck",
