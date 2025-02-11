@@ -1,7 +1,7 @@
 # Resource Creator
 
 Resource Creator is a powerful tool designed to streamline the creation of Minecraft Resource Packs. It automates the
-tedious parts of resource pack generation, so you can focus on creativity.
+tedious parts of resource pack creation, so you can focus on creativity.
 
 ![A screenshot of Resource Creator](docs/banner.png)
 
@@ -23,6 +23,31 @@ tedious parts of resource pack generation, so you can focus on creativity.
 
 Resource Creator is built with [Wails](https://wails.app), a Go framework for desktop applications, and features a
 modern frontend powered by Vite and React.
+
+### Prerequisites
+
+- [Go](https://golang.org/dl/)
+- [Node.js](https://nodejs.org/en/download/)
+- [Wails](https://wails.io/docs/gettingstarted/installation)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/sotterbeck/resource-creator.git
+   ```
+
+2. Navigate to the project directory:
+   ```bash
+   cd resource-creator
+   ```
+3. Run all tests to ensure everything is working correctly:
+   ```bash
+   go test ./...
+   ```
+
+Now you all set up. You can start the application in development mode or build it for production. For more information,
+see below.
 
 ### Live Development
 
