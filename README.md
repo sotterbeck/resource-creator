@@ -1,19 +1,50 @@
-# README
+# Resource Creator
 
-## About
+Resource Creator is a powerful tool designed to streamline the creation of Minecraft Resource Packs. It automates the
+tedious parts of resource pack generation, so you can focus on creativity.
 
-This is the official Wails React-TS template.
+![A screenshot of Resource Creator](docs/banner.png)
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
+## Features
 
-## Live Development
+### CTM Pattern Texture Generator
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
+- **Automated Processing:** Generate a complete pattern texture from a single source image.
+- **Smart Splitting:** Automatically splits the pattern and generates the necessary .properties file.
+- **Instant Preview:** Quickly preview your generated pattern within the application.
 
-## Building
+### Alternate Texture Generator
 
-To build a redistributable, production mode package, use `wails build`.
+- Coming Soon: Stay tuned for upcoming features.
+
+> **Note:** Resource Creator is still in development, and some features may not be available yet.
+
+## Development Setup
+
+Resource Creator is built with [Wails](https://wails.app), a Go framework for desktop applications, and features a
+modern frontend powered by Vite and React.
+
+### Live Development
+
+For rapid development and testing:
+
+1. Navigate to the project directory.
+2. Run:
+
+    ```bash
+    wails dev
+    ```
+   This command:
+    - Launches a Vite development server with fast hot-reloading for frontend changes.
+    - Starts a dev server on http://localhost:34115 to allow direct interaction with your Go backend methods via your
+      browser’s devtools.
+
+### Building for Production
+
+To create a production-ready distributable:
+
+```bash
+wails build
+```
+
+This command compiles the application into a standalone package for redistribution.
