@@ -182,3 +182,5 @@ go.work.sum
 ### Wails
 dist/
 build/bin
+
+.DS_Store
