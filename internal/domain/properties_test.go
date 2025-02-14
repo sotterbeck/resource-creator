@@ -6,40 +6,46 @@ import (
 )
 
 func TestPropertiesWriter_WriteTo(t *testing.T) {
-	type fields struct {
-		properties map[string]string
-	}
 	tests := []struct {
 		name    string
-		fields  fields
+		writer  func() *PropertiesWriter
 		wantErr bool
 		want    string
 	}{
 		{
 			name:   "empty",
-			fields: fields{properties: map[string]string{}},
+			writer: func() *PropertiesWriter { return NewPropertiesWriter(map[string]string{}) },
 			want:   "",
 		},
 		{
 			name:   "single property",
-			fields: fields{properties: map[string]string{"key": "value"}},
+			writer: func() *PropertiesWriter { return NewPropertiesWriter(map[string]string{"key": "value"}) },
 			want:   "key=value\n",
 		},
 		{
 			name: "multiple properties",
-			fields: fields{properties: map[string]string{
-				"key1": "value1",
-				"key2": "value2",
-				"key3": "value3",
-			}},
+			writer: func() *PropertiesWriter {
+				return NewPropertiesWriter(map[string]string{
+					"key1": "value1",
+					"key2": "value2",
+					"key3": "value3",
+				})
+			},
 			want: "key1=value1\nkey2=value2\nkey3=value3\n",
+		},
+		{
+			name: "with comments",
+			writer: func() *PropertiesWriter {
+				pw := NewPropertiesWriter(map[string]string{"key": "value"})
+				pw.AddComment("comment")
+				return pw
+			},
+			want: "# comment\nkey=value\n",
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			pw := &PropertiesWriter{
-				properties: tt.fields.properties,
-			}
+			pw := tt.writer()
 			w := &bytes.Buffer{}
 			_, err := pw.WriteTo(w)
 			if (err != nil) != tt.wantErr {

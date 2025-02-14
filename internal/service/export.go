@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"resource-creator/internal/domain"
+	"time"
 )
 
 type Exporter interface {
@@ -31,8 +32,12 @@ func (ce *CTMExporter) Export(dir string) error {
 		return err
 	}
 
-	_, name := domain.ParseMaterial(ce.material)
-	filePath := filepath.Join(dir, fmt.Sprintf("%s.properties", name))
+	_, name, err := domain.ParseMaterial(ce.material)
+	if err != nil {
+		return fmt.Errorf("failed to parse material: %v", err)
+	}
+
+	filePath := filepath.Join(dir, fmt.Sprintf("block_%s.properties", name))
 	f, err := os.Create(filePath)
 	defer f.Close()
 
@@ -47,11 +52,22 @@ func (ce *CTMExporter) Export(dir string) error {
 	}
 
 	pw := domain.NewPropertiesWriter(ctm.GetProps())
+	for _, c := range ce.getComments() {
+		pw.AddComment(c)
+	}
 	if _, err := pw.WriteTo(f); err != nil {
 		return fmt.Errorf("failed to write properties: %v", err)
 	}
 
 	return nil
+}
+
+func (ce *CTMExporter) getComments() []string {
+	t := time.Now()
+	return []string{
+		"Auto-generated properties file by Resource Creator (https://github.com/sotterbeck/resource-creator)",
+		"On " + t.Format(time.RFC1123),
+	}
 }
 
 func (ce *CTMExporter) checkRepeatResolution() error {

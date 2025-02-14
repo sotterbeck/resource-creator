@@ -9,14 +9,26 @@ import (
 
 type PropertiesWriter struct {
 	properties map[string]string
+	comments   []string
 }
 
 func NewPropertiesWriter(props map[string]string) *PropertiesWriter {
 	return &PropertiesWriter{properties: props}
 }
 
+func (pw *PropertiesWriter) AddComment(comment string) {
+	pw.comments = append(pw.comments, comment)
+}
+
 func (pw *PropertiesWriter) WriteTo(w io.Writer) (n int64, err error) {
 	var buf bytes.Buffer
+
+	for _, c := range pw.comments {
+		_, err := fmt.Fprintf(&buf, "# %s\n", c)
+		if err != nil {
+			return 0, err
+		}
+	}
 
 	keys := make([]string, 0, len(pw.properties))
 	for k := range pw.properties {
