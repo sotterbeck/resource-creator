@@ -13,27 +13,28 @@ export function TilePreview({
     return <></>;
   }
 
-  const tilesX = Math.floor(patternResolution.width / tileResolution);
-  const tilesY = Math.floor(patternResolution.height / tileResolution);
+  const cellsX = Math.floor(patternResolution.width / tileResolution);
+  const cellsY = Math.floor(patternResolution.height / tileResolution);
+  const cellWidth = `${100 / cellsX}%`;
+  const cellHeight = `${100 / cellsY}%`;
 
   return (
     <div className="relative w-full overflow-hidden rounded-md">
       <img
         src={src}
         alt="A preview of the selected texture"
-        className="h-full w-full object-cover pixelated"
+        className="pixelated h-full w-full object-cover"
       />
       <div
-        className="absolute inset-0 grid w-full gap-0"
+        className="pointer-events-none absolute inset-0"
         style={{
-          gridTemplateColumns: `repeat(${tilesX}, 1fr)`,
-          gridTemplateRows: `repeat(${tilesY}, 1fr)`,
+          backgroundImage: `
+            linear-gradient(to right, rgba(255,255,255,0.7) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255,255,255,0.7) 1px, transparent 1px)
+          `,
+          backgroundSize: `${cellWidth} ${cellHeight}`,
         }}
-      >
-        {Array.from({ length: tilesX * tilesY }).map((_, i) => (
-          <div key={i} className="border border-gray-400"></div>
-        ))}
-      </div>
+      />
     </div>
   );
 }
