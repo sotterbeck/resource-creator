@@ -27,7 +27,7 @@ func TestCTMExporter_Export(t *testing.T) {
 				tileRes:    16,
 				patternRes: domain.Resolution{Width: 64, Height: 64},
 			},
-			wantFiles: []string{"stone.properties"},
+			wantFiles: []string{"block_stone.properties"},
 		},
 		{
 			name: "invalid tile resolution",
