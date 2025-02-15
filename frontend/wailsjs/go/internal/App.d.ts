@@ -4,4 +4,6 @@ import {internal} from '../models';
 
 export function ExportPatternCTM(arg1:string,arg2:number):Promise<void>;
 
-export function OpenTextureFile():Promise<internal.OpenTextureFileResp>;
+export function OpenTextureFile(arg1:string):Promise<internal.TextureFile>;
+
+export function OpenTextureFiles(arg1:string):Promise<Array<internal.TextureFile>>;

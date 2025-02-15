@@ -6,6 +6,10 @@ export function ExportPatternCTM(arg1, arg2) {
   return window['go']['internal']['App']['ExportPatternCTM'](arg1, arg2);
 }
 
-export function OpenTextureFile() {
-  return window['go']['internal']['App']['OpenTextureFile']();
+export function OpenTextureFile(arg1) {
+  return window['go']['internal']['App']['OpenTextureFile'](arg1);
+}
+
+export function OpenTextureFiles(arg1) {
+  return window['go']['internal']['App']['OpenTextureFiles'](arg1);
 }

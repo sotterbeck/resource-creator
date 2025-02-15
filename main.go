@@ -42,7 +42,12 @@ func main() {
 		},
 		CSSDragProperty: "--wails-draggable",
 		CSSDragValue:    "drag",
-		OnStartup:       app.Startup,
+		DragAndDrop: &options.DragAndDrop{
+			EnableFileDrop:  true,
+			CSSDropValue:    "--wails-drop-target",
+			CSSDropProperty: "drop",
+		},
+		OnStartup: app.Startup,
 		Bind: []interface{}{
 			app,
 		},

@@ -9,6 +9,18 @@ type Resolution struct {
 	Height int
 }
 
+var images = map[string]Image{
+	"pattern": &PatternImage{},
+	"tile":    &TileImage{},
+}
+
+func GetImage(name string) Image {
+	if img, ok := images[name]; ok {
+		return img
+	}
+	return &TileImage{}
+}
+
 type PatternImage struct {
 }
 

@@ -1,13 +1,13 @@
 export namespace internal {
 	
-	export class OpenTextureFileResp {
+	export class TextureFile {
 	    name: string;
 	    imgData: string;
 	    width: number;
 	    height: number;
 	
 	    static createFrom(source: any = {}) {
-	        return new OpenTextureFileResp(source);
+	        return new TextureFile(source);
 	    }
 	
 	    constructor(source: any = {}) {

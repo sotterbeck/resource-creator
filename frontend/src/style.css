@@ -15,9 +15,6 @@ body {
     user-select: none;
 }
 
-.draggable {
-    --wails-draggable: drag;
-}
 
 @layer base {
     :root {
@@ -89,5 +86,13 @@ body {
 @layer utilities {
     .pixelated {
         image-rendering: pixelated;
+    }
+
+    .draggable {
+        --wails-draggable: drag;
+    }
+
+    .drop-target {
+        --wails-drop-target: drop;
     }
 }
