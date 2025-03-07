@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"reflect"
 	"testing"
 )
 
@@ -69,7 +70,7 @@ func TestBlockStateGenerate(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			assets := tt.generator.Generate(tt.material)
-			actual, err := json.MarshalIndent(assets[0].Data, "", "  ")
+			actualBytes, err := json.Marshal(assets[0].Data)
 			if err != nil {
 				t.Fatalf("failed to marshal assets: %v", err)
 			}
@@ -80,8 +81,20 @@ func TestBlockStateGenerate(t *testing.T) {
 
 			expected := loadFixture(t, tt.wantFile)
 
-			if string(actual) != expected {
-				t.Errorf("unexpected JSON output\nGot:\n%s\nWant:\n%s", string(actual), expected)
+			var actualObj, expectedObj interface{}
+
+			if err := json.Unmarshal(actualBytes, &actualObj); err != nil {
+				t.Fatalf("failed to unmarshal actual JSON: %v", err)
+			}
+
+			if err := json.Unmarshal([]byte(expected), &expectedObj); err != nil {
+				t.Fatalf("failed to unmarshal expected JSON: %v", err)
+			}
+
+			if !reflect.DeepEqual(actualObj, expectedObj) {
+				actualIndented, _ := json.MarshalIndent(actualObj, "", "  ")
+				expectedIndented, _ := json.MarshalIndent(expectedObj, "", "  ")
+				t.Errorf("unexpected JSON output\nGot:\n%s\nWant:\n%s", actualIndented, expectedIndented)
 			}
 		})
 	}
