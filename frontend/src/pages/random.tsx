@@ -2,7 +2,10 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { OpenTextureFiles } from "../../wailsjs/go/internal/App";
+import {
+  ExportRandomTexture,
+  OpenTextureFiles,
+} from "../../wailsjs/go/internal/App";
 import { Variant, VariantList } from "@/components/variant-list";
 import { Plus } from "lucide-react";
 
@@ -18,6 +21,7 @@ export default function Random() {
 
     const newVariants = resp.map((v) => ({
       name: v.name,
+      path: v.path,
       imgData: v.imgData,
     }));
 
@@ -28,6 +32,13 @@ export default function Random() {
           (variant, index, self) =>
             self.findIndex((v) => v.name === variant.name) === index,
         ),
+    );
+  }
+
+  async function handleGenerate() {
+    await ExportRandomTexture(
+      variants.map((v) => v.path),
+      material,
     );
   }
 
@@ -59,6 +70,7 @@ export default function Random() {
           variant="secondary"
           className="ml-auto mt-4"
           disabled={!material || variants.length === 0}
+          onClick={handleGenerate}
         >
           Generate
         </Button>

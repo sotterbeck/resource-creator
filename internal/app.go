@@ -55,6 +55,7 @@ var mimeTypes = map[string]string{
 
 type TextureFile struct {
 	Name    string `json:"name"`
+	Path    string `json:"path"`
 	ImgData string `json:"imgData"`
 	Width   int    `json:"width"`
 	Height  int    `json:"height"`
@@ -135,6 +136,7 @@ func (a *App) createTextureFile(validator string, path string) (*TextureFile, er
 	return &TextureFile{
 		ImgData: enImg,
 		Name:    filepath.Base(path),
+		Path:    path,
 		Width:   img.Bounds().Dx(),
 		Height:  img.Bounds().Dy(),
 	}, err
@@ -192,6 +194,30 @@ func (a *App) ExportPatternCTM(material string, tileRes int) error {
 	a.showDialog(runtime.InfoDialog, "Export Complete", "All files have been exported successfully")
 
 	return nil
+}
+
+func (a *App) ExportRandomTexture(textures []string, material string) {
+	dir, err := runtime.OpenDirectoryDialog(a.ctx, runtime.OpenDialogOptions{
+		Title: "Select the resource pack root directory",
+	})
+	if err != nil {
+		a.showDialog(runtime.ErrorDialog, "Export Error", "An error occurred while opening the directory.")
+	}
+
+	isPack, err := domain.IsResourcePack(dir)
+	if err != nil || !isPack {
+		a.showDialog(runtime.ErrorDialog, "Export Error", "The directory is not a resource pack root.")
+		return
+	}
+
+	exporter := service.NewAltExporter(material, textures)
+	err = exporter.Export(dir)
+	if err != nil {
+		a.showDialog(runtime.ErrorDialog, "Export Error", "Could not export random textures.")
+		return
+	}
+
+	a.showDialog(runtime.InfoDialog, "Export Complete", "All files have been exported successfully")
 }
 
 func (a *App) showDialog(typ runtime.DialogType, title, msg string) {

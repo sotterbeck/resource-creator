@@ -12,6 +12,7 @@ import { MoreVertical } from "lucide-react";
 
 export interface Variant {
   name: string;
+  path: string;
   imgData: string;
 }
 
@@ -35,7 +36,7 @@ export function VariantList({
             alt={variant.name}
             className="pixelated h-12 w-12"
           />
-          <div className="flex items-center justify-between w-full pr-3">
+          <div className="flex w-full items-center justify-between pr-3">
             <span className="text-sm tabular-nums">{variant.name}</span>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
